@@ -32,8 +32,10 @@ data = []
 
 
 def login():
-    username = input("请输入您的JMP账号：")
-    password = input("请输入您的JMP密码：")
+    username = 'yuhao.xue'
+    password = '980127xyhXYC'
+    # username = input("请输入您的JMP账号：")
+    # password = input("请输入您的JMP密码：")
     url = 'http://jmp.joowing.com/api/ris/sessions.json?session%5Blogin%5D={username}&session%5Bpassword%5D={password}'.format(
         username=username, password=password)
     response = requests.post(headers=headers, url=url, data=data)
@@ -159,9 +161,12 @@ def check_id():
 
 
 def recall_coupon():
-    count_list = []
+    from Auto_Scripts.Interface_method import Interface_Method
     org_code = input("org_code:")
-    member_no = input("member_no:")
+    Interface_Method = Interface_Method(url=1,data={})
+    member_no_info = Interface_Method.query_by_phone_or_member_no(org_code)
+    member_no = member_no_info['member_no']
+    count_list = []
     c_number = int(input("输入要撤的券数量："))
     serial_no = input("指定撤券的券号，不填默认按照数量进行撤券：")
     if serial_no:
@@ -169,18 +174,19 @@ def recall_coupon():
         search_url = f'http://jmp.joowing.com/api/pb/api/v1/history/coupon_histories.json?coupon_history%5Bcoupon_type%5D=mall&coupon_history%5Bmember_no%5D={member_no}&coupon_history%5Borg_code%5D={org_code}&coupon_history%5Bserial_no%5D={serial_no}&coupon_history%5Bstate%5D=init,expired&page%5Bindex%5D=1&page%5Bsize%5D={c_number}'
         res = requests.get(search_url, headers)
         for couponinfo in res.json():
-            state=couponinfo['state']
-            if state=='未使用':
+            state = couponinfo['state']
+            if state == '未使用':
                 id = couponinfo['id']
                 recall_url = 'http://jmp.joowing.com/api/pb/jmp_api/v1/coupon_histories/{id}/recall.json'.format(id=id)
                 recall_data = {"id": id}
                 recall_data = json.dumps(recall_data)
                 response = requests.post(url=recall_url, headers=headers, data=recall_data)
                 print(response.json())
-            else:print(f'券状态为{state}，过滤')
+            else:
+                print(f'券状态为{state}，过滤')
     else:
         check_instructions = input(f"本次撤券为无差别撤券，按页面顺序撤{c_number}张券，是否确认执行? y/n\n")
-        if check_instructions=='y':
+        if check_instructions == 'y':
             pass
         else:
             recall_coupon()
@@ -278,6 +284,7 @@ def shop_synchronization():
         else:
             print(f"商户{org_code}同步门店接口异常，同步门店ID为{id}")
 
+
 def add_miniprogram():
     url = 'http://jmp.joowing.com/rbj/api/wxopen/mini_programs/create.json'
     """
@@ -372,7 +379,4 @@ def operation():
         operation()
 
 
-
 operation()
-
-
