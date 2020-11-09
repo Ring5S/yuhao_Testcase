@@ -19,11 +19,15 @@ if __name__ == '__main__':
         i += 1
         if i < 3:
             print(f"{i}小于3嗷！")
-            print(fun(i))
+            fun(i)
 
         else:
             print(f"{i}不小于3嗷！")
             return i
 
-result = fun(0)
-print(result)
+# result = fun(0)
+# print(result)
+i = 0
+while i < 10000:
+    i+=1
+    print(i)

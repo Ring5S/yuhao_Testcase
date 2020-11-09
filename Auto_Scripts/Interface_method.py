@@ -63,5 +63,6 @@ if __name__ == '__main__':
     url = "http://nb3.joowing.com/nebula/v3/session?session%5Blogin%5D=js1@aitiantian.com&session%5Bpassword%5D=js0909"
     data = {}
     Interface_method = Interface_Method(url=url, data=data)
-    res = Interface_method.query_by_phone_or_member_no()
+    res = Interface_method.Post_request()
     print(res)
+

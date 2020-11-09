@@ -17,6 +17,8 @@ class Login:
         # password = 'js0909'
         url = f'http://nb3.joowing.com/nebula/v3/session?session%5Blogin%5D=js1@{org_code}.com&session%5Bpassword%5D={password}'
         NB_Session = requests.Session()
+        NB_Session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'})
         res = NB_Session.post(url=url, headers=self.headers, data=self.data)
         # print(res.request.headers)
         # print(res.json())
@@ -34,7 +36,7 @@ class Login:
             }
             data = {}
             # print(NB_Session)
-            return Login(headers=headers, data=data).NB_Login()
+            return Login.NB_Login()
             # return NB_Session
 
     def JMP_Login(self, ):
@@ -74,4 +76,7 @@ if __name__ == '__main__':
 
     login = Login(headers=headers, data=data)
     session = login.NB_Login()
-    print(session)
+    print(session.headers)
+    url = 'http://nb3.joowing.com/nebula/v3/red_envelope/pay_config'
+    res = session.get(url=url)
+    print(res.request.headers)

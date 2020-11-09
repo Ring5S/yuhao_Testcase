@@ -31,7 +31,7 @@ import threading
 def myTestFunc(name):
     print(f"我是一个函数，名称是{name}")
 
+# os.listdir("/")
 
 t = threading.Thread(target=myTestFunc, args="1")  # 创建一个线程
 t.start()  # 启动线程
-os.listdir("/")

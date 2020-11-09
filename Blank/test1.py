@@ -1,47 +1,27 @@
-# 0、1、1、2、3、5、8、13、21、34
 import json
-
-
-def fib_recur():
-    fib_recur = [0, 1]
-    a = 1
-    num = int(input("输入组数数字:"))
-    for i in range(num - 2):
-        fib_recur_next = fib_recur[a - 1] + fib_recur[a]
-        fib_recur.append(fib_recur_next)
-        # fib_recur[3] = 2
-        print(fib_recur)
-        a += 1
-    print(f'fib_recur数列第{len(fib_recur)}组数字为{fib_recur[len(fib_recur) - 1]}')
-
-
-headers = {
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept': '*/*',
-    'Accept-Language': 'zh-CN,zh;q=0.9',
-    "Connection": "keep-alive",
-    'content-type': 'application/json',
-    'Cookie': 'jwbaby_user_id=28de5760-5161-0138-1527-165424acb931;_pomelo_session=75f8583d9d8f1328a4652d9224a43f73;',
-    'Origin': 'http://127.0.0.1:32559',
-    'Referer': 'https://servicewechat.com/wxa626fd2bb831c8a1/devtools/page-frame.html',
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1 wechatdevtools/1.03.2010240 MicroMessenger/7.0.4 Language/zh_CN webview/',
-    'X-CSRF-Token': 'sA0+Qj6ciWlCMNH8wZsg/7Abu2zdswKk3zaYQPfVQSU=',
-    'Content-Length': '240',
-    'sec-ch-ua': 'nwjs 75',
-    'Sec-Fetch-Site': 'cross-site',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Dest': 'empty',
-    'Host': 'jwbaby.w.joowing.com'
-}
-
-url = 'https://jwbaby.w.joowing.com/org/jwbaby/orders/build_order.json'
-data = {"order": {"cart_items": [
-    {"sku": "4902011747577", "num": 1, "shop": "16535", "buz_type": "promotion", "buz_code": "mutex_1604307827070257",
-     "buz_pid": "mutex_item_16043079306564603"}], "scene": "mall", "easy_buy": True, "address_id": None},
-        "version": "2.5.4"}
-data = json.dumps(data)
 import requests
 
-res = requests.post(url=url, headers=headers,data=data)
-print(res, res.json())
+headers = {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json;charset=UTF-8',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36',
+    'Cookie': 'UM_distinctid=1748a47d9990-07dad5d805dfe8-333769-144000-1748a47d99a2cd; _ga=GA1.2.998566515.1600415159; _newbee_session=3b61319e9f77d74f7e28dec91c697b9b; joowing-session-id=3b61319e9f77d74f7e28dec91c697b9b; Hm_lvt_0c2e41563784bcc9e3dabc630b67ef35=1604553260; retailer-staff-jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ODcwMjUsIm5hbWUiOiJqczFAZnFmYnQuY29tIiwibmlja19uYW1lIjoi56aP5riF56aP55m-56ulLeaKgOacrzEiLCJubyI6ImpzMSIsInBob25lIjoiMTgwMDAwMDE2OTYiLCJ0eXBlIjoiam9vd2luZy1zdGFmZiIsIm9yZ19pZCI6MTQxOTgsIm9yZ19jb2RlIjoiZnFmYnQiLCJyZXRhaWxlcl9pZCI6MTQxOTgsInJldGFpbGVyX2NvZGUiOiJmcWZidCIsImV4cCI6MTYwNDk3ODE1NX0.hrAdnbIScEmTqHU6VhIwdPcLuWNpZZ-sCz_byO0kVmo; login=js1%40fqfbt.com'
+}
+data1 = {"notification_config": {"org_code": "fqfbt", "buz_type": "order", "name": "null",
+                                 "receivers": [{"id": 14900, "type": "role", "label": "区域母婴店长"}], "contents": [
+        {"scene": "cancel", "name": "null", "content": "%{shop}有新退单%{order_no}，总价%{total}元，请及时退单"},
+        {"scene": "fast_mail", "name": "null", "content": "%{shop}有新物流订单%{order_no}，总价%{total}元，请及时录单发货"},
+        {"scene": "self_delivery", "name": "null", "content": "%{shop}有新自提订单%{order_no}，总价%{total}元，请及时录单"}]}}
+# data2 = '{"notification_config":{"org_code":"fqfbt","buz_type":"order","name":"null","receivers":[{"id":14900,"type":"role","label":"区域母婴店长"}],"contents":[{"scene":"cancel","name":"null","content":"%{shop}有新退单%{order_no}，总价%{total}元，请及时退单"},{"scene":"fast_mail","name":"null","content":"%{shop}有新物流订单%{order_no}，总价%{total}元，请及时录单发货"},{"scene":"self_delivery","name":"null","content":"%{shop}有新自提订单%{order_no}，总价%{total}元，请及时录单"}]}}'
+data3 = json.dumps(data1)
+post_mess_url = 'http://nb3.joowing.com/nebula/v3/nebula_config/notification_configs/create_or_update'
+Session = requests.session()
+print(Session)
+# res = session.post(url=post_mess_url, data=data1, headers=headers)
+# res2 = session.post(url=post_mess_url, data=data2.encode())
+res3 = Session.post(url=post_mess_url, data=data3 ,headers=headers)
+print(res3.request.headers)
+
+
+res = Session.post(url=post_mess_url, data=data3)
 print(res.request.headers)
