@@ -221,7 +221,8 @@ def hackinfo():
             ('222.73.36.230', 2002),  # 跳板机ip及端口
             ssh_password='980127xyhXYC',  # 跳板机密码
             ssh_username='yuhao.xue',  # 跳板机用户名
-            remote_bind_address=('rm-uf6f05k2rg95s23bp.mysql.rds.aliyuncs.com', 3306)) as server:  # 连接的数据库地址及端口
+            remote_bind_address=('rm-uf6f05k2rg95s23bp.mysql.rds.aliyuncs.com', 3306),
+    local_bind_address=('0.0.0.0',22)) as server:  # 连接的数据库地址及端口
 
         db_connect = pymysql.connect(host='127.0.0.1',  # 此处必须是是127.0.0.1
                                      port=server.local_bind_port,  # 默认，无需修改

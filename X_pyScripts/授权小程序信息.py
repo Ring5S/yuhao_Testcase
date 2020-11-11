@@ -31,7 +31,8 @@ message = tkinter.messagebox
 
 def refresh():
     a = 0
-    check_refreshtime = 50
+    # 设置监控间隔时间
+    check_refreshtime = 30
     org_code = input("输入要监控的商户code：")
     import time
     released_status = 1
