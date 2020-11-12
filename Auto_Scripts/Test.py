@@ -14,3 +14,8 @@ def time_array():
     timeArray = time.strptime(a2, "%Y/%m/%d %H:%M:%S")
     otherStyleTime = time.strftime("%Y/%m/%d %H:%M:%S", timeArray)
     print(otherStyleTime)
+    return 1,2,'a'
+
+a = time_array()
+print(type(a))
+print(a)

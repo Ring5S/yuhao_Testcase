@@ -89,7 +89,7 @@ def SQL_Excute(SQL):
             ssh_password='980127xyhXYC',  # 跳板机密码
             ssh_username='yuhao.xue',  # 跳板机用户名
             remote_bind_address=('rm-uf6f05k2rg95s23bp.mysql.rds.aliyuncs.com', 3306)) as server:  # 连接的数据库地址及端口
-
+        # sever.start()
         db_connect = pymysql.connect(host='127.0.0.1',  # 此处必须是是127.0.0.1
                                      port=server.local_bind_port,  # 默认，无需修改
                                      user='chong_chen_st',  # 连接的数据库用户名
@@ -101,7 +101,7 @@ def SQL_Excute(SQL):
         data = cursor.fetchall()
         # print(data)
         cursor.close()
-        db_connect.close()
+        # db_connect.close()
         return data
 
 
