@@ -1,4 +1,6 @@
 import time
+import json
+
 def time_array():
     a1 = "2019-5-10 23:40:00"
     # 先转换为时间数组
@@ -14,8 +16,16 @@ def time_array():
     timeArray = time.strptime(a2, "%Y/%m/%d %H:%M:%S")
     otherStyleTime = time.strftime("%Y/%m/%d %H:%M:%S", timeArray)
     print(otherStyleTime)
-    return 1,2,'a'
+    return 1, 2, 'a'
 
-a = time_array()
-print(type(a))
-print(a)
+
+# a = time_array()
+# print(type(a))
+# print(a)
+#
+# import requests
+
+list1=[0,1,1,1,2,2,3,3]
+list=list(set(list1))
+print(list)
+print(set(list1))

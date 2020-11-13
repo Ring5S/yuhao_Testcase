@@ -1,4 +1,4 @@
-from Auto_Scripts.接口方法 import Login
+from Auto_Scripts.公共方法 import Login
 
 headers = {
     'Accept': 'application/json, text/plain, */*',
