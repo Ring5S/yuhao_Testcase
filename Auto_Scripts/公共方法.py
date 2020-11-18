@@ -123,16 +123,16 @@ where org_code in ('xtaed')"""
     # connect.close()
 
 
-list1=[]
-list2=[]
-for i in range(100):
-    list1.append(i)
-for i in range(50,100):
-    list2.append(i)
+    list1=[]
+    list2=[]
+    for i in range(100):
+        list1.append(i)
+    for i in range(50,100):
+        list2.append(i)
 
-list3=list(set(list2+list1))
-for i in range(len(list3)-1):
-    print(i,end=",")
-# a = str(list3)
-# print(re.)
+    list3=list(set(list2+list1))
+    for i in range(len(list3)-1):
+        print(i,end=",")
+    # a = str(list3)
+    # print(re.)
 
