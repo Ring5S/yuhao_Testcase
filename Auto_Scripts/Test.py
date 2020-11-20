@@ -25,7 +25,10 @@ def time_array():
 #
 # import requests
 
-list1=[0,1,1,1,2,2,3,3]
-list=list(set(list1))
-print(list)
-print(set(list1))
+# list1=[0,1,1,1,2,2,3,3]
+# list=list(set(list1))
+# print(list)
+# print(set(list1))
+phone = 18360029680
+print(str(phone)[-4:])
+

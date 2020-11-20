@@ -42,8 +42,10 @@ class Login:
             # return NB_Session
 
     def JMP_Login(self, ):
-        uesrname = input("输入登录JMP的账号:")
-        password = input("输入登录JMP的密码:")
+        # uesrname = input("输入登录JMP的账号:")
+        # password = input("输入登录JMP的密码:")
+        uesrname = "yuhao.xue"
+        password = "980127xyhXYC"
         url = f'http://jmp.joowing.com/api/ris/sessions.json?session%5Blogin%5D={uesrname}&session%5Bpassword%5D={password}'
         JMP_Session = requests.Session()
         res = JMP_Session.post(url=url, headers=self.headers, data=self.data)
@@ -51,7 +53,7 @@ class Login:
         # print(res)
         # print(res.request.url)
         if res.status_code == 200:
-            print('登录成功！')
+            print('JMP登录成功！')
             return JMP_Session
         else:
             print("JMP登录失败！请重试")
@@ -122,17 +124,15 @@ where org_code in ('xtaed')"""
     # cursor.close()
     # connect.close()
 
-
-    list1=[]
-    list2=[]
+    list1 = []
+    list2 = []
     for i in range(100):
         list1.append(i)
-    for i in range(50,100):
+    for i in range(50, 100):
         list2.append(i)
 
-    list3=list(set(list2+list1))
-    for i in range(len(list3)-1):
-        print(i,end=",")
+    list3 = list(set(list2 + list1))
+    for i in range(len(list3) - 1):
+        print(i, end=",")
     # a = str(list3)
     # print(re.)
-
