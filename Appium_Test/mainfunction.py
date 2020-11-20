@@ -11,7 +11,7 @@ class Slide:
     def swipeLeft(self):
         l = self.get_screen_size()
         x1 = int(l[0] * 0.75)
-        y1 = int(l[1] * 0.5)
+        y1 = int(l[1] * 0.3)
         x2 = int(l[0] * 0.25)
         self.driver.swipe(x1, y1, x2, y1)
         print('向左滑动')

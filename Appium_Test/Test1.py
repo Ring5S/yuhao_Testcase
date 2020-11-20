@@ -29,6 +29,7 @@ caps["appActivity"] = "com.joowing.app.activity.MainActivity"
 # caps["noReset"] 为False时，每次调试app时会默认重置app状态为对应acctivity入口，为True则按照打开调试app时app的当前入口来操作
 caps["noReset"] = False
 caps["ensureWebviewsHavePages"] = True
+# 一定要开启Appium的服务
 driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
 driver.implicitly_wait(20)
 
@@ -81,7 +82,7 @@ def account_login(info):
         if i.text == '今日门店销售':
             print('管理员登录页面显示正常')
         if i.text.isdigit():
-            # 这个地方写的很锉，先这样，后面会根据元素位置来定位......
+            # 这个地方写的很锉，先这样，后面会根据元素子集关系来定位......
             if int(i.text) >= 0:
                 print(f"一级面板数据第{num}层正常！")
             else:
@@ -123,6 +124,28 @@ def show_sales_data():
     sl[0].click()
 
 
-account_login(account_login_json)
-# phone_login(phone_login_json)
-show_sales_data()
+def guider_logon():
+    phone_login(phone_login_json)
+    tl = driver.find_elements_by_class_name('android.widget.TextView')
+    tl[2].click()
+    QR_code_sl = 'text("专属顾问二维码").className("android.widget.TextView")'
+    QR_code = driver.find_element_by_android_uiautomator(QR_code_sl)
+    QR_code.click()
+    ImageView = driver.find_elements_by_class_name('android.widget.ImageView')
+    if len(ImageView) != 0:
+        time.sleep(3)
+        print("专属顾问二维码渲染正常！")
+    else:
+        time.sleep(6)
+        print("专属顾问二维码渲染异常！")
+    QR_close = driver.find_elements_by_class_name('android.widget.TextView')[2]
+    QR_close.click()
+    time.sleep(2)
+    for i in range(5):
+        Slider.swipeLeft()
+        time.sleep(0.5)
+
+
+# account_login(account_login_json)
+# show_sales_data()
+guider_logon()
