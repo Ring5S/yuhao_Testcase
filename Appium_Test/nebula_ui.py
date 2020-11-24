@@ -19,10 +19,14 @@ Activity是Android系统中的四大组件之一，可以用于显示View
 配置如下：
 caps["appActivity"] = "com.joowing.app.activity.MainActivity" 
 """
+#
+loading_id = 'com.joowing.nebula.online:id/center'
 account_login_id = "com.joowing.nebula.online:id/account_login"
 login_phone_id = 'com.joowing.nebula.online:id/phone'
+# 客服按钮
+iv_helper_id = 'com.joowing.nebula.online:id/iv_helper_icon'
 account_login_json = {
-    'account_name': 'js1@jwbaby.com',
+    'account_name': 'js1@haoshijie.com',
     'account_password': 'js1109'
 }
 phone_login_json = {
@@ -56,7 +60,7 @@ Slider = Slide(driver)
 def choose_id_click(ele_id):
     try:
         login_driver = driver.find_element_by_id(ele_id)
-        print(login_driver)
+        # print(login_driver)
         login_driver.click()
         time.sleep(0.6)
     except Exception as e:
@@ -82,17 +86,21 @@ def account_login(info):
     driver.find_elements_by_id(login_button_id)[0].click()
     time.sleep(8)
     TouchAction(driver).tap(x=745, y=160).perform()
-    text_insure = driver.find_elements_by_class_name('android.widget.TextView')
-    for i in text_insure:
-        num = text_insure.index(i)
-        if i.text == '今日门店销售':
-            print('管理员登录页面显示正常')
-        if i.text.isdigit():
-            # 这个地方写的很锉，先这样，后面会根据元素子集关系来定位......
-            if int(i.text) >= 0:
-                print(f"一级面板数据第{num}层正常！")
-            else:
-                print("一级面板销售数据异常！")
+    # driver.find_element_by_xpath("//*[@text='今日门店销售']").click()
+    # time.sleep(3)
+    # driver.back()
+    # text_insure = driver.find_elements_by_class_name('android.widget.TextView')
+    # a = 1
+    # for i in text_insure:
+    #     if i.text == '今日门店销售':
+    #         print('管理员登录页面显示正常')
+    #     if i.text.isdigit():
+    #         # 这个地方写的很锉，先这样，后面会根据元素子集关系来定位......
+    #         if int(i.text) >= 0:
+    #             print(f"一级面板数据{a}层数据显示为{i.text}正常！")
+    #         else:
+    #             print(f"一级面板数据{a}层数据显示为{i.text}异常！")
+    #         a += 1
 
 
 # 手机号获取验证码登录
@@ -145,7 +153,7 @@ def guider_logon():
     else:
         time.sleep(6)
         print("专属顾问二维码渲染异常！")
-    QR_close = driver.find_elements_by_class_name('android.widget.TextView')[2]
+    QR_close = driver.find_elements_by_class_name('android.widget. ')[2]
     QR_close.click()
     time.sleep(2)
     for i in range(4):
@@ -155,6 +163,49 @@ def guider_logon():
     time.sleep(1)
 
 
-# account_login(account_login_json)
+def show_sales():
+    time.sleep(3)
+    # 先定位一层数据的子元素，之后找今日门店销售的父元素，再通过该父元素定位父元素，再通过该元素定位数据部分的父元素。。。
+    desc_xpath = '//*[@class="android.widget.TextView"][@text="元"]'
+    # print(driver.find_element_by_xpath(
+    #     '//*[@class="android.widget.TextView"][@text="截至到数据更新时间，今日门店POS累计销售额（不包含服务类）"]').text)
+    # 定位到一层元素的第一个子元素，对应一级页面一层右半边的元素
+    desc_xpath_fa = f'{desc_xpath}/..'
+    # 一层元素
+    desc_grand = f'{desc_xpath_fa}/..'
+    # 销售面板数据总元素
+    top2_grand = f'{desc_grand}/..'
+    top2_grand_list = f'{top2_grand}/android.widget.LinearLayout'
+    tt = driver.find_elements_by_xpath(top2_grand_list)
+    print(tt, len(tt))
+    # 当前层的总元素进行遍历
+    for i in range(1, len(tt) + 1):
+        a = 1
+        fa_now = f'{top2_grand_list}[{i}]'
+        # 当前层左半边
+        fa_left = f'{fa_now}/android.widget.LinearLayout[1]'
+        # 当前层左半边标题
+        fa_left_title = f'{fa_left}/android.widget.LinearLayout'
+        # 标题描述
+        left_title = f'{fa_left_title}/android.widget.TextView'
+        # 当前层右半边
+        fa_right = f'{fa_now}/android.widget.LinearLayout[2]'
+        right_data = f'{fa_right}/android.widget.TextView[1]'
+        right_desc = f'{fa_right}/android.widget.TextView[2]'
+        # 层标题
+        title = driver.find_element_by_xpath(left_title).text
+        # 层数据
+        data = driver.find_element_by_xpath(right_data).text
+        if data.isdigit():
+            a += 1
+        else:
+            print(f'{title}数据{data}展示异常')
+        # 层数据描述
+        desc = driver.find_element_by_xpath(right_desc).text
+        print(f'{title}{data}{desc}')
+
+
+account_login(account_login_json)
+show_sales()
 # show_sales_data()
-guider_logon()
+# guider_logon()
