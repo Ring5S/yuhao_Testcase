@@ -20,3 +20,7 @@ for dir_path in dir_list:
             shutil.move(new_name, dir_abs_path)
         print("删除文件夹完成！", dir_org_path)
         shutil.rmtree(dir_org_path)
+for i in range(1,3):
+    print(i)
+
+# 更新1
