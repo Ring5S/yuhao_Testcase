@@ -4,16 +4,9 @@ from appium import webdriver
 from Appium_Test.mainfunction import Slide, BasicMethods
 from Auto_Scripts.公共方法 import Login
 from Appium_Test.UI流程方法 import BusProcess
+from Appium_Test import global_varibals
 
-# 部分场景需要用到接口查询
-headers = {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json;charset=UTF-8',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36',
-    'Connection': 'keep-alive'
-}
-data = {}
-Login = Login(headers=headers, data=data)
+Login = Login(headers=global_varibals.headers, data=global_varibals.data)
 """
 Activity是Android系统中的四大组件之一，可以用于显示View
 我们的智零售启动appActivity在Appium调试的时候发现必须得用通过APK包解出来的【launchable-activity】,其他页面启动会报错
@@ -27,12 +20,12 @@ login_phone_id = 'com.joowing.nebula.online:id/phone'
 # 客服按钮
 iv_helper_id = 'com.joowing.nebula.online:id/iv_helper_icon'
 account_login_json = {
-    'account_name': 'js1@haoshijie.com',
-    'account_password': 'js1109'
+    'account_name': global_varibals.account_name,
+    'account_password': global_varibals.account_password
 }
 phone_login_json = {
-    'phone': '12020102902',
-    'org_code': 'jwbaby'
+    'phone': global_varibals.phone,
+    'org_code': global_varibals.org_code
 }
 
 
@@ -53,7 +46,6 @@ def appium_start():
 
 
 # 准备实例化
-
 driver = appium_start()
 driver.implicitly_wait(20)
 Slider = Slide(driver)
@@ -130,9 +122,11 @@ def guider_ui():
     BusProcess.guider_login()
 
 
+# noinspection PyBroadException
 try:
     administrators_ui()
     BusProcess.secondary_panel()
+    BusProcess.third_panel()
 except Exception as e:
     print("--------------一级面板UI验证异常！见异常截图-------------------")
     driver = appium_start()
@@ -140,3 +134,4 @@ except Exception as e:
     Slider = Slide(driver)
     administrators_ui()
     BusProcess.secondary_panel()
+    BusProcess.third_panel()

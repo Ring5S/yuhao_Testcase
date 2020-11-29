@@ -82,7 +82,8 @@ class BusProcess:
             # 层数据
             data = driver.find_element_by_xpath(right_data).text
             is_number = self.is_number(data)
-            if is_number:
+            # 判断一级面板展示的数据是否为数字并且大于等于0，才可通过
+            if is_number and float(data) >= 0:
                 a += 1
             else:
                 print(f'{title}数据{data}展示异常')
@@ -119,9 +120,20 @@ class BusProcess:
         sale_xpath_fa6 = f'{sale_xpath_fa}/android.widget.Button[6]'
         for i in range(3, 7):
             time.sleep(1)
-            t4 = driver.find_element_by_xpath(f'{sale_xpath_fa}/android.widget.Button[{i}]')
-            t4.click()
+            t = driver.find_element_by_xpath(f'{sale_xpath_fa}/android.widget.Button[{i}]')
+            t.click()
             time.sleep(0.5)
             Slider.swipeUp()
             Slider.swipeDown()
-            time.sleep(0.6)
+            time.sleep(0.3)
+        print("-------------二级面板UI验证完成，即将跳转三级页面-----------------")
+        time.sleep(1)
+        t = driver.find_element_by_xpath(sale_xpath_fa3)
+        t.click()
+        # 通过点击二级面板数据进入三级面板
+
+    def third_panel(self):
+        driver = self.driver
+        third_xpath = '//*[@class="android.view.View"][@content-desc="点击查看: 明星实收导购>>>更多"]'
+        third_l = driver.find_element_by_xpath(third_xpath)
+        third_l.click()
