@@ -244,6 +244,7 @@ def hackinfo():
 
     url = 'https://{org_code}.w.joowing.com/org/{org_code}/home_page?with_tabs=1&usr={usr}'.format(org_code=org_code,
                                                                                                    usr=usr)
+    print(url)
     driver = webdriver.Chrome("D:\PyCharm Community Edition 2020.2.1\chromedriver.exe")
     driver.get(url)
     print(url)
