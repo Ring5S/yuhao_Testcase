@@ -43,3 +43,23 @@ def huiwen(s):
                 res = False
                 break
     return res
+# DP构造
+s1 = "abcde"
+s2 = "ace"
+s1_list = list(s1)
+s2_list = list(s2)
+s1_list.insert(0, "")
+s2_list.insert(0, "")
+
+len1 = len(s1_list)
+len2 = len(s2_list)
+print(len1, len2)
+dp = []
+# 构造一个DP表，row行cel列
+for row in range(len2):
+    cel_l = []
+    for cel in range(len1):
+        cel_l.append(cel)
+    dp.append(cel_l)
+# print(dp)
+dp[0][0] = 0
