@@ -65,13 +65,17 @@ for row in range(len2):
 dp[0][0] = 0
 
 # 经典栈
-pushed = [1, 2, 3, 4, 5]
-popped = [4, 5, 3, 2, 1]
-stack = []
-i = 0
-for push in pushed:
-    stack.append(push)
-    while stack and stack[-1] == popped[i]:
-        stack.pop()
-        i += 1
-print(stack)
+class Solution:
+    def validateStackSequences(self, pushed, popped) -> bool:
+        stack = []
+        for i in range(len(pushed)):
+            stack.append(pushed[i])
+            while stack[-1] == popped[0]:
+                print(stack)
+                popped.pop(0)
+                stack.pop(-1)
+                print(stack)
+                if len(stack) == 0:
+                    break
+        print(stack)
+        return not stack
