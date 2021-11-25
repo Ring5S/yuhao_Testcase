@@ -79,3 +79,48 @@ class Solution:
                     break
         print(stack)
         return not stack
+    
+# 思路：将多维度复合排序整合成单一列简单排序
+
+
+def func(in_list):
+    nation = []
+    for word in in_total.strip().split('\n'):
+        nation.append(word.strip().split())
+    return nation
+
+#将字母也转换成按顺序排位的小数
+def letter_num(string):
+    string = string.lower()
+    s = '0abcdefghijklmnopqrstuvwxyz'
+    result = ''
+    for i in range(0,len(string)):
+        result = result +str(100 - s.index(string[i]))
+    return result
+
+if __name__ == "__main__":
+    in_total = ''
+    #一次性输入多行
+    country_num = 0
+    n = 9999999999
+    while country_num <= n:
+        strs = input()
+        if country_num == 0:
+            n = int(strs)
+            country_num += 1
+        else:
+            in_total += strs
+            in_total += '\n'
+            country_num += 1
+#取的input数组
+    list_input = func(in_total)
+    result = []
+#获取排名
+    for i in list_input:
+        result.append((i[0],float(str(int(i[1])*1000000 + int(i[2])*1000 + int(i[3])) + '.' +letter_num(i[0]))))
+    result =  sorted(result, key=lambda result : result[1],reverse=True)
+#输出
+    output = ''
+    for i in result:
+        output += i[0] + '\n'
+    print(output)
