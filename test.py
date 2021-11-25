@@ -124,3 +124,45 @@ if __name__ == "__main__":
     for i in result:
         output += i[0] + '\n'
     print(output)
+    
+# oj1==============================
+inputs = """6
+China 32 28 34
+England 12 34 22
+France 23 33 2
+Japan 12 34 25
+Rusia 23 43 0
+AG 12 34 25"""
+
+
+def func(in_list):
+    nation = []
+    for word in in_list.split('\n'):
+        singe_nation = []
+        for x in word.split():
+            if x.isdigit():
+                singe_nation.append(int(x))
+            else:
+                singe_nation.append(x)
+        nation.append(singe_nation)
+    print(nation)
+    for index in range(1, nation[0][0] + 1):
+        item = nation[index]
+        nation_name = item.pop(0)
+        item.insert(3, nation_name)
+    return nation
+
+
+res = func(inputs)
+nums = res[0][0]
+del res[0]
+res.sort(reverse=True)
+print(res)
+for index in range(nums - 1):
+    L = res[index]
+    R = res[index + 1]
+    if L[0:3] == R[0:3]:
+        if L[3] > R[3]:
+            res[index], res[index + 1] = res[index + 1], res[index]
+print(res)
+
